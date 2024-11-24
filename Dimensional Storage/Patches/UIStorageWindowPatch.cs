@@ -14,13 +14,11 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
         public static void _OnCreatePostfix(ref UIStorageWindow __instance)
         {
 
-            Debug.Log("DS - UIStorageWindow _OnCreatePostfix");
             StorageWindow = __instance;
 
             // Add a new button to the UIStorageWindow
             if (DimensionalStorageButton != null)
             {
-                Debug.Log("DS - Button already exists");
                 return;
             }
 
@@ -47,26 +45,24 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
 
         private static void ButtonOnClick(int obj)
         {
-            Debug.Log("DS - ButtonOnClick");
             var storageComponent = GetStorageComponent();
 
             if (storageComponent == null)
             {
-                Debug.Log("DS - StorageComponent is null");
                 return;
             }
 
-            bool isLinked = DimensionalStorageSystem.StorageContainers.Contains(storageComponent);
-
-            if (DimensionalStorageSystem.StorageContainers.Contains(storageComponent))
+            if (DimensionalStorageMod.DimensionalStorageSystem.StorageContainers.Contains(storageComponent))
             {
                 // Remove the storage container from the Dimensional Storage System
-                DimensionalStorageSystem.RemoveStorageContainer(storageComponent);
+                DimensionalStorageMod.DimensionalStorageSystem.RemoveStorageContainer(storageComponent);
             }
             else
             {
-                DimensionalStorageSystem.AddStorageContainer(storageComponent);
+                DimensionalStorageMod.DimensionalStorageSystem.AddStorageContainer(storageComponent);
             }
+            
+            bool isLinked = DimensionalStorageMod.DimensionalStorageSystem.StorageContainers.Contains(storageComponent);
 
             UpdateUI(isLinked);
 
@@ -77,16 +73,14 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
         [HarmonyPostfix]
         public static void OnStorageIdChangePostfix(ref UIStorageWindow __instance)
         {
-            Debug.Log("DS - OnStorageIdChangePostfix");
             var storageComponent = GetStorageComponent();
             if (storageComponent == null)
             {
                 UpdateUI(false);
-                Debug.Log("DS - StorageComponent is null");
                 return;
             }
 
-            bool isLinked = DimensionalStorageSystem.StorageContainers.Contains(storageComponent);
+            bool isLinked = DimensionalStorageMod.DimensionalStorageSystem.StorageContainers.Contains(storageComponent);
             UpdateUI(isLinked);
         }
 

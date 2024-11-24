@@ -33,9 +33,6 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
             currentStorage = new MechaForgeStorageTryAddTaskStorageComponent(0);
             // Set field value
             _test_storage.SetValue(__instance, currentStorage);
-            Debug.Log("DS - TryAddTaskPrefix: currentStorage is null so created a new one");
-
-
         }
 
     }

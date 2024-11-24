@@ -21,7 +21,6 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
 
             if (__instance.active && tmpPackage == null)
             {
-                Debug.Log("DS - _GameTickPrefix: tmpPackage is null");
                 var tempStorage = new TempBuildStorageComponent(__instance.player.package.size);
                 tmpPackageField.SetValue(__instance, tempStorage);
             }

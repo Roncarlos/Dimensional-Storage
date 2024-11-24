@@ -25,7 +25,7 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
                 int itemCount = selectedRecipe.ItemCounts[i];
 
                 // Add what we can from the Dimensional Storage
-                DimensionalStorageSystem.TransferToPlayer(itemId, itemCount, itemCount);
+                DimensionalStorageMod.DimensionalStorageSystem.TransferToPlayer(itemId, itemCount, itemCount);
             }
 
             return true;

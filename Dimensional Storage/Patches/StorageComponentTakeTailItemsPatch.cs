@@ -39,7 +39,7 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
             
             if(count > numberOfItemInTempPackage)
             {
-                DimensionalStorageSystem.TransferToPlayer(DimensionalStorageSystem.Player, itemId, count - numberOfItemInTempPackage, inc);
+                DimensionalStorageMod.DimensionalStorageSystem.TransferToPlayer(itemId, count - numberOfItemInTempPackage, inc);
             }
             
         }

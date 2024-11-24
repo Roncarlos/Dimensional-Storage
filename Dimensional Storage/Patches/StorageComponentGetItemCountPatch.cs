@@ -28,7 +28,7 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
 
             try
             {
-                foreach (var storage in DimensionalStorageSystem.StorageContainers)
+                foreach (var storage in DimensionalStorageMod.DimensionalStorageSystem.StorageContainers)
                 {
                     __result += storage.GetItemCount(itemId, out int count2);
                     inc += count2;

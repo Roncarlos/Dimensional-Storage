@@ -1,30 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Com.JiceeDev.DimensionalStorage
 {
-    public static class DimensionalStorageSystem
+    public interface ISaveComponent
     {
-        public static HashSet<StorageComponent> StorageContainers { get; private set; } = new HashSet<StorageComponent>();
-        public static Player Player { get; } = GameMain.mainPlayer;
+        void Export(BinaryWriter writer);
+        void Import(BinaryReader reader);
+    }
+    
+    
+    public class DimensionalStorageSystem : ISaveComponent
+    {
+        public HashSet<StorageComponent> StorageContainers { get; private set; } = new HashSet<StorageComponent>();
 
-        public static void AddStorageContainer(StorageComponent storage)
+        public void AddStorageContainer(StorageComponent storage)
         {
             StorageContainers.Add(storage);
         }
 
-        public static void RemoveStorageContainer(StorageComponent storage)
+        public void RemoveStorageContainer(StorageComponent storage)
         {
             StorageContainers.Remove(storage);
         }
 
-        public static int GetItemCount(int itemId)
+        public int GetItemCount(int itemId)
         {
             return StorageContainers.Select(c => c.GetItemCount(itemId)).Sum();
         }
 
-        public static void TransferTo(StorageComponent other, int itemId, int count)
+        public void TransferTo(StorageComponent other, int itemId, int count)
         {
             int maximumItemsAvailable = StorageContainers.Select(c => c.GetItemCount(itemId)).Sum();
 
@@ -53,12 +60,12 @@ namespace Com.JiceeDev.DimensionalStorage
             }
         }
 
-        public static void TransferToPlayer(int itemId, int count, int itemInc)
+        public void TransferToPlayer(int itemId, int count, int itemInc)
         {
-            TransferToPlayer(Player, itemId, count, itemInc);
+            TransferToPlayer(GameMain.data.mainPlayer, itemId, count, itemInc);
         }
 
-        public static void TransferToPlayer(Player player, int itemId, int count, int itemInc)
+        public void TransferToPlayer(Player player, int itemId, int count, int itemInc)
         {
             int maximumItemsAvailable = StorageContainers.Select(c => c.GetItemCount(itemId)).Sum();
 
@@ -89,5 +96,29 @@ namespace Com.JiceeDev.DimensionalStorage
         }
 
 
+        public void Export(BinaryWriter writer)
+        {
+            writer.Write(StorageContainers.Count);
+            foreach (var storage in StorageContainers)
+            {
+                writer.Write(storage.id);
+            }
+        }
+
+        public void Import(BinaryReader reader)
+        {
+            StorageContainers.Clear();
+            int count = reader.ReadInt32();
+            for (int i = 0; i < count; i++)
+            {
+                int id = reader.ReadInt32();
+                var storage = GameMain.data.factories.First(c => c.factoryStorage.storagePool[id] != null).factoryStorage.storagePool[id];
+                if(storage == null)
+                {
+                    continue;
+                }
+                StorageContainers.Add(storage);
+            }
+        }
     }
 }

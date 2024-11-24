@@ -24,7 +24,7 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
 
             try
             {
-                __result += DimensionalStorageSystem.GetItemCount(itemId);
+                __result += DimensionalStorageMod.DimensionalStorageSystem.GetItemCount(itemId);
             } catch (Exception ex)
             {
                 Debug.Log("DS - GetItemCountPrefix error: " + ex.ToString());

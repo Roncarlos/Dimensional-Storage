@@ -28,7 +28,7 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
             
             int numberOfItemsInStorage = __instance.GetItemCount(itemId);
             // Add what we can from the Dimensional Storage
-            numberOfItemsInStorage += DimensionalStorageSystem.GetItemCount(itemId);
+            numberOfItemsInStorage += DimensionalStorageMod.DimensionalStorageSystem.GetItemCount(itemId);
             
             Debug.Log("DS - TakeItemPostfix: itemId=" + itemId + " count=" + count + " numberOfItemsInStorage=" + numberOfItemsInStorage);
             Debug.Log("DS - TakeItemPostfix: numberOfItemsInStorage=" + numberOfItemsInStorage);

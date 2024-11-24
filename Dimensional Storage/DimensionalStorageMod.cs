@@ -1,7 +1,9 @@
-﻿using BepInEx;
+﻿using System.IO;
+using BepInEx;
 using Com.JiceeDev.DimensionalStorage.Patches;
 using CommonAPI;
 using CommonAPI.Systems;
+using crecheng.DSPModSave;
 using HarmonyLib;
 
 
@@ -10,8 +12,13 @@ namespace Com.JiceeDev.DimensionalStorage
 
 
     [BepInPlugin("com.jiceedev.DimensionalStorage", "Dimensional Storage", "1.0.0")]
-    public class DimensionalStorageMod : BaseUnityPlugin
+    [BepInDependency(DSPModSavePlugin.MODGUID)]
+    public class DimensionalStorageMod : BaseUnityPlugin, IModCanSave 
     {
+        
+        public static DimensionalStorageSystem DimensionalStorageSystem = new DimensionalStorageSystem();
+        
+        
         void Awake()
         {
             // Harmony Patch for UIStorageWindow
@@ -23,6 +30,23 @@ namespace Com.JiceeDev.DimensionalStorage
             Harmony.CreateAndPatchAll(typeof(MechaForgePatch));
             Harmony.CreateAndPatchAll(typeof(UIReplicatorWindowPatch));
             Harmony.CreateAndPatchAll(typeof(StorageComponentReplicatorCheckItemsPatch));
+        }
+        
+        public void Export(BinaryWriter  writer)
+        {
+            // Export the Dimensional Storage System
+            DimensionalStorageSystem.Export(writer);
+        }
+        
+        public void Import(BinaryReader reader)
+        {
+            // Import the Dimensional Storage System
+            DimensionalStorageSystem.Import(reader);
+        }
+
+        public void IntoOtherSave()
+        {
+            return;
         }
 
 
