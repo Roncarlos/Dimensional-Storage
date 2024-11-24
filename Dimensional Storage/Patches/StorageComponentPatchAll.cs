@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Com.JiceeDev.DimensionalStorage.Models;
 using HarmonyLib;
 using UnityEngine;
 
@@ -16,20 +17,22 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
         [HarmonyPostfix]
         public static void GetItemCountPostfix(ref int __result, StorageComponent __instance, int itemId)
         {
-            if (!__instance.isPlayerInventory)
+            if (!__instance.isPlayerInventory && !(__instance is MechaForgeStorageTryAddTaskStorageComponent))
             {
                 return;
             }
 
             try
             {
-                __result += DimensionalStorageSystem.StorageContainers.Select(c => c.GetItemCount(itemId)).Sum();
+                __result += DimensionalStorageSystem.GetItemCount(itemId);
             } catch (Exception ex)
             {
                 Debug.Log("DS - GetItemCountPrefix error: " + ex.ToString());
             }
 
         }
+        
+      
         
     }
 }

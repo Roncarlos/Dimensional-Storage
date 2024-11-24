@@ -20,10 +20,6 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
                 typeof(bool)
             });
         }
-
-        private static int startItemId = 0;
-        private static int startCount = 0;
-        private static int startInc = 0;
         
         // Prefix to cache item id
         [HarmonyPrefix]
@@ -43,7 +39,7 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
             
             if(count > numberOfItemInTempPackage)
             {
-                DimensionalStorageSystem.TransferToPlayer(BuildToolPatch.player, itemId, count - numberOfItemInTempPackage, inc);
+                DimensionalStorageSystem.TransferToPlayer(DimensionalStorageSystem.Player, itemId, count - numberOfItemInTempPackage, inc);
             }
             
         }

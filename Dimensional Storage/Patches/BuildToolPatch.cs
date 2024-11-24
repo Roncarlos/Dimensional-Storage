@@ -8,7 +8,6 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
     public class BuildToolPatch
     {
         private static FieldInfo tmpPackageField = typeof(BuildTool).GetField("tmpPackage", BindingFlags.NonPublic | BindingFlags.Instance);
-        public static Player player;
         
         
         // Patch for _GameTick(long time) for class BuildTool
@@ -19,8 +18,6 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
             // There is a tmpPackage field in BuildTool
             // I want to check it's value and if it's null i want to create a new TempBuildStorageComponent
             var tmpPackage = (StorageComponent) tmpPackageField.GetValue(__instance);
-            
-            player = __instance.player;
 
             if (__instance.active && tmpPackage == null)
             {
