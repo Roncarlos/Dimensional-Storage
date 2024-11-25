@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UnityEngine;
 
 namespace Com.JiceeDev.DimensionalStorage
 {
@@ -16,10 +17,21 @@ namespace Com.JiceeDev.DimensionalStorage
     {
         public HashSet<StorageComponent> StorageContainers { get; private set; } = new HashSet<StorageComponent>();
 
-        public void AddStorageContainer(StorageComponent storage)
+        private bool CanAddMoreStorageContainers()
         {
-            StorageContainers.Add(storage);
+            return StorageContainers.Count < DimensionalStorageMod.TechManager.GetCachedDimensionalBonus().NumberOfDimensionalStorage;
         }
+        
+        public int GetRemainingLinks()
+        {
+            return DimensionalStorageMod.TechManager.GetCachedDimensionalBonus().NumberOfDimensionalStorage - StorageContainers.Count;
+        }
+        
+        public bool AddStorageContainer(StorageComponent storage)
+        {
+            return CanAddMoreStorageContainers() && StorageContainers.Add(storage);
+        }
+
 
         public void RemoveStorageContainer(StorageComponent storage)
         {
@@ -95,7 +107,6 @@ namespace Com.JiceeDev.DimensionalStorage
             }
         }
 
-
         public void Export(BinaryWriter writer)
         {
             writer.Write(StorageContainers.Count);
@@ -103,6 +114,7 @@ namespace Com.JiceeDev.DimensionalStorage
             {
                 writer.Write(storage.id);
             }
+            
         }
 
         public void Import(BinaryReader reader)

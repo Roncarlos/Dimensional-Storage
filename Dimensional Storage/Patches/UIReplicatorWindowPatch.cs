@@ -18,6 +18,13 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
             {
                 return true;
             }
+            
+            var dimensionBonus = DimensionalStorageMod.TechManager.GetCachedDimensionalBonus();
+            
+            if(!dimensionBonus.CanReplicateWithDimensionalStorage)
+            {
+                return true;
+            }
 
             for (int i = 0; i < selectedRecipe.Items.Length; i++)
             {

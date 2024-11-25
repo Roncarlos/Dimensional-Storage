@@ -17,6 +17,9 @@
       <Reference Include="BepInEx">
         <HintPath>..\Libraries\BepInEx.dll</HintPath>
       </Reference>
+      <Reference Include="FullSerializer">
+        <HintPath>..\Libraries\FullSerializer.dll</HintPath>
+      </Reference>
       <Reference Include="Mono.Security">
         <HintPath>..\Libraries\Mono.Security.dll</HintPath>
       </Reference>
@@ -281,6 +284,8 @@
       <PackageReference Include="DysonSphereProgram.Modding.CommonAPI" Version="1.6.5" />
       <PackageReference Include="DysonSphereProgram.Modding.DSPModSave" Version="1.2.0" />
       <PackageReference Include="DysonSphereProgram.Modding.LDBTool" Version="3.0.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="System.Text.Json" Version="9.0.0" />
     </ItemGroup>
 
 </Project>

@@ -26,12 +26,16 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
                 return;
             }
             
+            var dimensionBonus = DimensionalStorageMod.TechManager.GetCachedDimensionalBonus();
+            
+            if( !dimensionBonus.CanReplicateWithDimensionalStorage)
+            {
+                return;
+            }
+            
             int numberOfItemsInStorage = __instance.GetItemCount(itemId);
             // Add what we can from the Dimensional Storage
             numberOfItemsInStorage += DimensionalStorageMod.DimensionalStorageSystem.GetItemCount(itemId);
-            
-            Debug.Log("DS - TakeItemPostfix: itemId=" + itemId + " count=" + count + " numberOfItemsInStorage=" + numberOfItemsInStorage);
-            Debug.Log("DS - TakeItemPostfix: numberOfItemsInStorage=" + numberOfItemsInStorage);
             
             
             __result = numberOfItemsInStorage - count;

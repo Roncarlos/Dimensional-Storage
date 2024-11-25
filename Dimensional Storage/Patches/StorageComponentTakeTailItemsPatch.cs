@@ -32,6 +32,14 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
             {
                 return;
             }
+            
+            var dimensionBonus = DimensionalStorageMod.TechManager.GetCachedDimensionalBonus();
+            
+            if(!dimensionBonus.CanBuildWithDimensionalStorage)
+            {
+                return;
+            }
+
 
             // Debug.Log("DS - TakeTailItemsPrefix !");
 

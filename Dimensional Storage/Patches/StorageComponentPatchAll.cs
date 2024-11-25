@@ -21,6 +21,18 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
             {
                 return;
             }
+            
+            var dimensionBonus = DimensionalStorageMod.TechManager.GetCachedDimensionalBonus();
+            
+            if(__instance.isPlayerInventory && !dimensionBonus.CanBuildWithDimensionalStorage)
+            {
+                return;
+            }
+            
+            if(__instance is MechaForgeStorageTryAddTaskStorageComponent && !dimensionBonus.CanReplicateWithDimensionalStorage)
+            {
+                return;
+            }
 
             try
             {
