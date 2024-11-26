@@ -5,6 +5,7 @@
         <AssemblyName>Com.JiceeDev.DimensionalStorage</AssemblyName>
         <TargetFramework>net48</TargetFramework>
         <IsPackable>false</IsPackable>
+        <Version>1.0.1</Version>
     </PropertyGroup>
 
     <ItemGroup>
