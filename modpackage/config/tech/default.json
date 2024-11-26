@@ -1,1 +1,234 @@
-{}
+{
+  "TechItems": [
+    {
+      "ID": 2651,
+      "IDLong": "dimensional_storage_basic",
+      "Name": "Dimensional Storage - Basic",
+      "Description": "The first step to access the Dimensional Storage, unlocks the basic Dimensional Storage",
+      "Conclusion": "You have unlocked the basic Dimensional Storage (And +4 Dimensional Storage)",
+      "IconPath": "assets/dimensional_storage.png",
+      "RequiredTechs": [],
+      "Jellos": [
+        6001
+      ],
+      "JellosRates": [
+        50
+      ],
+      "HashNeeded": 7200,
+      "UnlockRecipes": [],
+      "Position": {
+        "x": 9,
+        "y": 44
+      },
+      "Bonuses": {
+        "NumberOfDimensionalStorage": 4
+      }
+    },
+    {
+      "ID": 2652,
+      "IDLong": "dimensional_storage_build",
+      "Name": "Dimensional Storage - Build",
+      "Description": "The dimension storage is a powerful tool, you will be able to build with it",
+      "Conclusion": "You have unlocked the ability to build with the Dimensional Storage (And +1 Dimensional Storage)",
+      "IconPath": "assets/dimensional_storage.png",
+      "RequiredTechs": [
+        2651
+      ],
+      "Jellos": [
+        6001
+      ],
+      "JellosRates": [
+        50
+      ],
+      "HashNeeded": 3600,
+      "UnlockRecipes": [],
+      "Position": {
+        "x": 13,
+        "y": 48
+      },
+      "Bonuses": {
+        "NumberOfDimensionalStorage": 1,
+        "CanBuildWithDimensionalStorage": true
+      }
+    },
+    {
+      "ID": 2653,
+      "IDLong": "dimensional_storage_advanced",
+      "Name": "Dimensional Storage - Advanced",
+      "Description": "Unlock the advanced Dimensional Storage (And +4 Dimensional Storage)",
+      "Conclusion": "You have unlocked the advanced Dimensional Storage",
+      "IconPath": "assets/dimensional_storage.png",
+      "RequiredTechs": [
+        2651
+      ],
+      "Jellos": [
+        6001,
+        6002
+      ],
+      "JellosRates": [
+        10,
+        10
+      ],
+      "HashNeeded": 72000,
+      "UnlockRecipes": [],
+      "Position": {
+        "x": 13,
+        "y": 44
+      },
+      "Bonuses": {
+        "NumberOfDimensionalStorage": 4
+      }
+    },
+    {
+      "ID": 2654,
+      "IDLong": "dimensional_storage_replicate",
+      "Name": "Dimensional Storage - Replicate",
+      "Description": "Unlock the ability to replicate with the Dimensional Storage",
+      "Conclusion": "You have unlocked the ability to use the replicator with the Dimensional Storage",
+      "IconPath": "assets/dimensional_storage.png",
+      "RequiredTechs": [
+        2653
+      ],
+      "Jellos": [
+        6001,
+        6002
+      ],
+      "JellosRates": [
+        10,
+        10
+      ],
+      "HashNeeded": 36000,
+      "UnlockRecipes": [],
+      "Position": {
+        "x": 17,
+        "y": 48
+      },
+      "Bonuses": {
+        "NumberOfDimensionalStorage": 0,
+        "CanReplicateWithDimensionalStorage": true
+      }
+    },
+    {
+      "ID": 2655,
+      "IDLong": "dimensional_storage_advanced_two",
+      "Name": "Dimensional Storage - Advanced (II)",
+      "Description": "More storage, more power, more possibilities (And +5 Dimensional Storage)",
+      "Conclusion": "You have unlocked the advanced Dimensional Storage (II)",
+      "IconPath": "assets/dimensional_storage.png",
+      "RequiredTechs": [
+        2653
+      ],
+      "Jellos": [
+        6001,
+        6002,
+        6003
+      ],
+      "JellosRates": [
+        10,
+        10,
+        10
+      ],
+      "HashNeeded": 216000,
+      "UnlockRecipes": [],
+      "Position": {
+        "x": 17,
+        "y": 44
+      },
+      "Bonuses": {
+        "NumberOfDimensionalStorage": 5
+      }
+    },
+    {
+      "ID": 2656,
+      "IDLong": "dimensional_storage_advanced_three",
+      "Name": "Dimensional Storage - Advanced (III)",
+      "Description": "Even more storage, even more power, even more possibilities (And +5 Dimensional Storage)",
+      "Conclusion": "You have unlocked the advanced Dimensional Storage (III)",
+      "IconPath": "assets/dimensional_storage.png",
+      "RequiredTechs": [
+        2655
+      ],
+      "Jellos": [
+        6001,
+        6002,
+        6003,
+        6004
+      ],
+      "JellosRates": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "HashNeeded": 306000,
+      "UnlockRecipes": [],
+      "Position": {
+        "x": 21,
+        "y": 44
+      },
+      "Bonuses": {
+        "NumberOfDimensionalStorage": 5
+      }
+    },
+    {
+      "ID": 2657,
+      "IDLong": "dimensional_storage_master",
+      "Name": "Dimensional Storage - Master",
+      "Description": "The ultimate storage, the ultimate power, the ultimate possibilities (And +5 Dimensional Storage)",
+      "Conclusion": "You have unlocked the master Dimensional Storage",
+      "IconPath": "assets/dimensional_storage.png",
+      "RequiredTechs": [
+        2656
+      ],
+      "Jellos": [
+        6001,
+        6002,
+        6003,
+        6004,
+        6005
+      ],
+      "JellosRates": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "HashNeeded": 990000,
+      "UnlockRecipes": [],
+      "Position": {
+        "x": 25,
+        "y": 44
+      },
+      "Bonuses": {
+        "NumberOfDimensionalStorage": 5
+      }
+    },
+    {
+      "ID": 2658,
+      "IDLong": "dimensional_storage_infinity",
+      "Name": "Dimensional Storage - Infinity",
+      "Description": "The ultimate storage, the ultimate power, the ultimate possibilities (And +100 Dimensional Storage)",
+      "Conclusion": "You have unlocked the infinity Dimensional Storage",
+      "IconPath": "assets/dimensional_storage.png",
+      "RequiredTechs": [
+        2657
+      ],
+      "Jellos": [
+        6006
+      ],
+      "JellosRates": [
+        3.5
+      ],
+      "HashNeeded": 1980000,
+      "UnlockRecipes": [],
+      "Position": {
+        "x": 29,
+        "y": 44
+      },
+      "Bonuses": {
+        "NumberOfDimensionalStorage": 100
+      }
+    }
+  ]
+}

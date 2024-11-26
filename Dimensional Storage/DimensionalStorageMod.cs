@@ -43,6 +43,7 @@ namespace Com.JiceeDev.DimensionalStorage
             Harmony.CreateAndPatchAll(typeof(MechaForgePatch));
             Harmony.CreateAndPatchAll(typeof(UIReplicatorWindowPatch));
             Harmony.CreateAndPatchAll(typeof(StorageComponentReplicatorCheckItemsPatch));
+            Harmony.CreateAndPatchAll(typeof(GameHistoryDataPatch));
         }
 
         public void Export(BinaryWriter writer)

@@ -1,7 +1,7 @@
 {
     "name": "Dimensional_Storage",
     "description": "A simple, yet uselful storage system",
-    "version_number": "1.0.1",
+    "version_number": "1.0.3",
     "dependencies": [
         "xiaoye97-BepInEx-5.4.17",
         "CommonAPI-CommonAPI-1.6.5",

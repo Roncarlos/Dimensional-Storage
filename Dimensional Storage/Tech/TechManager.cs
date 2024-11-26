@@ -3,14 +3,29 @@ using System.IO;
 using System.Reflection;
 using CommonAPI.Systems;
 using CommonAPI.Systems.ModLocalization;
+using HarmonyLib;
 using UnityEngine;
 
 namespace Com.JiceeDev.DimensionalStorage.Tech
 {
+    public class GameHistoryDataPatch
+    {
+        // Harmony NotifyTechUnlock patch
+        [HarmonyPatch(typeof(GameHistoryData), "NotifyTechUnlock")]
+        [HarmonyPostfix]
+        public static void NotifyTechUnlockPostfix()
+        {
+           DimensionalStorageMod.TechManager.ReloadCache();
+        }
+    }
+    
+    
     public class TechManager : ITechManager
     {
         private static bool _isLoaded = false;
         private readonly static Dictionary<int, TechItem> _techItems = new Dictionary<int, TechItem>();
+
+        private bool _isTechListening = false;
 
         private DimensionalBonus _currentBonus = null;
 
@@ -21,15 +36,8 @@ namespace Com.JiceeDev.DimensionalStorage.Tech
                 LoadConfig();
                 LoadTechs();
             }
-            else
-            {
-                GameMain.history.onTechUnlocked += HistoryOnTechUnlocked;
-            }
-        }
 
-        private void HistoryOnTechUnlocked(int arg1, int arg2, bool arg3)
-        {
-            _currentBonus = GetAllDimensionalBonus();
+
         }
 
         public DimensionalBonus GetCurrentDimensionalBonus(int techID)
@@ -45,6 +53,11 @@ namespace Com.JiceeDev.DimensionalStorage.Tech
             }
             // return new DimensionalBonus();
             return techItem.Bonuses;
+        }
+
+        public void ReloadCache()
+        {
+            _currentBonus = GetAllDimensionalBonus();
         }
 
         public DimensionalBonus GetAllDimensionalBonus()
@@ -135,7 +148,8 @@ namespace Com.JiceeDev.DimensionalStorage.Tech
 
         public void Dispose()
         {
-            GameMain.history.onTechUnlocked -= HistoryOnTechUnlocked;
+            // GameMain.history.onTechUnlocked -= HistoryOnTechUnlocked;
+            // GameMain.history.onFunctionUnlocked -= HistoryOnFunctionUnlocked;
         }
     }
 }

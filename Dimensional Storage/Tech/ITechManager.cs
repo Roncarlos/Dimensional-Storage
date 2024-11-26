@@ -8,6 +8,7 @@ namespace Com.JiceeDev.DimensionalStorage.Tech
         DimensionalBonus GetCurrentDimensionalBonus(int techID);
         DimensionalBonus GetAllDimensionalBonus();
         DimensionalBonus GetCachedDimensionalBonus();
+        void ReloadCache();
 
     }
 }
