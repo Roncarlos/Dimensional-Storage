@@ -39,3 +39,4 @@ This mod was't tested with other mods, so it may not work properly with some of 
 ---
 
 If you have any feedback, suggestions or bug reports, please let me know.
+You can open an issue on the [GitHub repository](https://github.com/Roncarlos/Dimensional-Storage)
