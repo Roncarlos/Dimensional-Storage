@@ -66,7 +66,7 @@ namespace Com.JiceeDev.DimensionalStorage
             DimensionalStorageSystem = new DimensionalStorageSystem();
             TechManager = new TechManager();
             // Load the configuration
-            GlobalConfiguration.Init(new ConfigFile(Path.Combine(Paths.ConfigPath, "global_configuration.cfg"), true));
+            GlobalConfiguration.Init(new ConfigFile(Path.Combine(Paths.ConfigPath, "dimensional_storage.global_configuration.cfg"), true));
             TechManager.RegisterTechs();
         }
 

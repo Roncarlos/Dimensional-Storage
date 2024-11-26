@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using BepInEx;
 using CommonAPI.Systems;
 using CommonAPI.Systems.ModLocalization;
 using HarmonyLib;
@@ -86,8 +87,8 @@ namespace Com.JiceeDev.DimensionalStorage.Tech
 
         private static void LoadConfig()
         {
-
-            string json = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "config", "tech",
+            
+            string json = File.ReadAllText(Path.Combine(Paths.ConfigPath, "DimensionalStorage", "tech",
                 GlobalConfiguration.Tech.TechsPath));
 
             var techTree = StringSerializationAPI.Deserialize(typeof(TechTree), json) as TechTree;

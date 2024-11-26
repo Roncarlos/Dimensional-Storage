@@ -1,3 +1,50 @@
+param(
+    [string]$version = $null
+)
+
+
+if ($version -ne $null) {
+    # Change version in ./Dimensional Storage/Dimensional Storage.csproj
+
+    $csprojPath = "./Dimensional Storage/Dimensional Storage.csproj"
+
+    $csprojContent = Get-Content -Path $csprojPath -Encoding UTF8
+
+    $csprojContent = $csprojContent -replace "<Version>.*</Version>", "<Version>$version</Version>"
+
+    Set-Content -Path $csprojPath -Value $csprojContent -Encoding UTF8
+
+    Write-Host "Version changed to $version in $csprojPath"
+
+    # Change version in ./modpackage/manifest.json
+
+    $manifestPath = "./modpackage/manifest.json"
+
+    $manifestContent = Get-Content -Path $manifestPath -Encoding UTF8
+
+    $manifestContent = $manifestContent -replace "`"version_number`": `".*`"", "`"version_number`": `"$version`""
+
+    Set-Content -Path $manifestPath -Value $manifestContent -Encoding UTF8
+
+    Write-Host "Version changed to $version in $manifestPath"
+
+    # Change version in ./Dimensional Storage/Dimensional Storage.cs
+    # [BepInPlugin("com.jiceedev.DimensionalStorage", "Dimensional Storage", "1.0.0")]
+
+    $csPath = "./Dimensional Storage\DimensionalStorageMod.cs"
+
+    $csContent = Get-Content -Path $csPath -Encoding UTF8
+
+    $csContent = $csContent -replace "\[BepInPlugin\(`"com.jiceedev.DimensionalStorage`", `"Dimensional Storage`", `".*`"\]", "[BepInPlugin(`"com.jiceedev.DimensionalStorage`", `"Dimensional Storage`", `"$version`")]"
+
+    Set-Content -Path $csPath -Value $csContent -Encoding UTF8
+
+    Write-Host "Version changed to $version in $csPath"
+
+
+}
+
+
 Write-Host "########################################"
 Write-Host "Package Folder preparation"
 Write-Host "########################################"

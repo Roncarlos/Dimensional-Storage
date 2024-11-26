@@ -9,7 +9,7 @@ namespace Com.JiceeDev.DimensionalStorage
     public static class Utils
     {
         private readonly static string CurrentFolderAssemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        private readonly static string AssetsPath = Path.Combine(CurrentFolderAssemblyPath, "assets");
+        private readonly static string AssetsPath = Path.Combine(CurrentFolderAssemblyPath);
 
         public static Texture2D GetTexture(string name, int width = 32, int height = 32)
         {
