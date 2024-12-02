@@ -11,28 +11,38 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
 
         [HarmonyPatch(typeof(MechaForge), "TryAddTask")]
         [HarmonyPrefix]
-        public static bool TryAddTaskPrefix(MechaForge __instance)
+        public static void TryAddTaskPrefix(MechaForge __instance)
         {
             InitStorage(__instance);
-            return true;
         }
         
         [HarmonyPatch(typeof(MechaForge), "TryTaskWithTestPackage")]
         [HarmonyPrefix]
-        public static bool TryTaskWithTestPackagePrefix(MechaForge __instance)
+        public static void TryTaskWithTestPackagePrefix(MechaForge __instance)
         {
             InitStorage(__instance);
-            return true;
         }
 
         private static void InitStorage(MechaForge __instance)
         {
             var currentStorage = (StorageComponent)_test_storage.GetValue(__instance);
-            if (currentStorage != null) return;
+            if (currentStorage is MechaForgeStorageTryAddTaskStorageComponent)
+            {
+                return;
+            }
+            Debug.Log("DS - InitStorage for MechaForge !");
             // Create a MechaForgeStorageTryAddTaskStorageComponent with size 0
             currentStorage = new MechaForgeStorageTryAddTaskStorageComponent(0);
             // Set field value
             _test_storage.SetValue(__instance, currentStorage);
+        }
+        
+        // PredictTaskCount(int recipeId, int maxShowing = 99, bool predictBottleneckItems = false)
+        [HarmonyPatch(typeof(MechaForge), "PredictTaskCount")]
+        [HarmonyPrefix]
+        public static void PredictTaskCountPostfix(MechaForge __instance, ref int __result, int recipeId, int maxShowing, bool predictBottleneckItems)
+        {
+            // Debug.Log("DS - PredictTaskCountPostfix: Result: " + __result + " RecipeId: " + recipeId + " MaxShowing: " + maxShowing + " PredictBottleneckItems: " + predictBottleneckItems);
         }
 
     }

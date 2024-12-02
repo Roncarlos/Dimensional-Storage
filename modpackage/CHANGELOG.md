@@ -1,3 +1,8 @@
+# 1.0.5
+
+- Fix possible incompatibility with other mods
+- Fix replication not working properly
+
 # 1.0.4
 
 - Fix missing tech tree due to how things are handle by thunder store

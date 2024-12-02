@@ -28,7 +28,7 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
             // Show type
             // Debug.Log("DS - TakeTailItemsPrefix: " + __instance.GetType());
             // Check if it's in current inventory
-            if (!(__instance is TempBuildStorageComponent))
+            if (!(__instance is TempBuildStorageComponent) && !__instance.isPlayerInventory)
             {
                 return;
             }
@@ -53,4 +53,5 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
         }
 
     }
+    
 }

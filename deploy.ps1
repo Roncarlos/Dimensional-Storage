@@ -1,9 +1,58 @@
 param(
-    [string]$version = $null
+    [string]$version = ""
 )
 
 
-if ($version -ne $null) {
+
+# if string is empty then set at null
+if ($version -eq "") {
+    $version = $null
+}
+
+
+Write-Host ($null -eq $version)
+
+# if version is null get last version from manifest.json
+if ("" -eq $version) {
+    Write-Host "########################################"
+    Write-Host "Incrementing version number"
+    Write-Host "########################################"
+
+    $manifestPath = "./modpackage/manifest.json"
+
+    $manifestContent = Get-Content -Path $manifestPath -Encoding UTF8
+
+    $version = $manifestContent | ConvertFrom-Json | Select-Object -ExpandProperty version_number
+
+    Write-Host "Version from manifest.json: $version"
+
+    # Increment the version number
+
+    $versionParts = $version -split "\."
+
+    $lastPart = $versionParts[-1]
+
+    $lastPart = [int]$lastPart + 1
+
+    $versionParts[-1] = $lastPart
+
+    $version = $versionParts -join "."
+    Write-Host "Incremented version: $version"
+}
+
+# Check if changelog contains the version
+
+$changelogPath = "./modpackage/CHANGELOG.md"
+
+$changelogContent = Get-Content -Path $changelogPath -Encoding UTF8
+
+if (-not $changelogContent -match "$version") {
+    Write-Host "Changelog does not contain the version $version" -ForegroundColor Red
+    exit
+}
+
+
+if ("" -ne $version) {
     # Change version in ./Dimensional Storage/Dimensional Storage.csproj
 
     $csprojPath = "./Dimensional Storage/Dimensional Storage.csproj"
@@ -43,6 +92,10 @@ if ($version -ne $null) {
 
 
 }
+
+
+
+
 
 
 Write-Host "########################################"

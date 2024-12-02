@@ -8,7 +8,6 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
 {
     public class StorageComponentPatchAll
     {
-
         // Prefix patch for method with one int parameter
         [HarmonyPatch(typeof(StorageComponent), "GetItemCount", new Type[]
         {
@@ -17,34 +16,38 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
         [HarmonyPostfix]
         public static void GetItemCountPostfix(ref int __result, StorageComponent __instance, int itemId)
         {
-            if (!__instance.isPlayerInventory && !(__instance is MechaForgeStorageTryAddTaskStorageComponent))
+            bool shouldBeHandled = __instance.isPlayerInventory || __instance is MechaForgeStorageTryAddTaskStorageComponent;
+
+            if (!shouldBeHandled)
             {
                 return;
             }
-            
+
             var dimensionBonus = DimensionalStorageMod.TechManager.GetCachedDimensionalBonus();
-            
-            if(__instance.isPlayerInventory && !dimensionBonus.CanBuildWithDimensionalStorage)
+
+            if (__instance.isPlayerInventory && !dimensionBonus.CanBuildWithDimensionalStorage)
             {
                 return;
             }
-            
-            if(__instance is MechaForgeStorageTryAddTaskStorageComponent && !dimensionBonus.CanReplicateWithDimensionalStorage)
+
+            if (__instance is MechaForgeStorageTryAddTaskStorageComponent && !dimensionBonus.CanReplicateWithDimensionalStorage)
             {
                 return;
             }
 
             try
             {
-                __result += DimensionalStorageMod.DimensionalStorageSystem.GetItemCount(itemId);
-            } catch (Exception ex)
+                int dimensionalStorageItemCount = DimensionalStorageMod.DimensionalStorageSystem.GetItemCount(itemId);
+                __result += dimensionalStorageItemCount;
+            }
+            catch (Exception ex)
             {
                 Debug.Log("DS - GetItemCountPrefix error: " + ex.ToString());
             }
 
         }
-        
-      
-        
+
+
+
     }
 }

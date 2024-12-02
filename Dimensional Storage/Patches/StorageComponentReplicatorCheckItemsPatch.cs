@@ -32,13 +32,17 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
             {
                 return;
             }
+
+            if (__result >= count)
+            {
+                return;
+            }
             
-            int numberOfItemsInStorage = __instance.GetItemCount(itemId);
             // Add what we can from the Dimensional Storage
-            numberOfItemsInStorage += DimensionalStorageMod.DimensionalStorageSystem.GetItemCount(itemId);
+            int numberOfItemsInStorage = DimensionalStorageMod.DimensionalStorageSystem.GetItemCount(itemId) + inc;
             
-            
-            __result = numberOfItemsInStorage - count;
+            // __result should be at max the count
+            __result = numberOfItemsInStorage > count ? count : numberOfItemsInStorage;            
         }
     }
 }

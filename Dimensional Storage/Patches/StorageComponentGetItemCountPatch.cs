@@ -27,17 +27,17 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
             }
 
             var dimensionBonus = DimensionalStorageMod.TechManager.GetCachedDimensionalBonus();
-            
-            if(__instance.isPlayerInventory && !dimensionBonus.CanBuildWithDimensionalStorage)
+
+            if (__instance.isPlayerInventory && !dimensionBonus.CanBuildWithDimensionalStorage)
             {
                 return;
             }
-            
-            if(__instance is MechaForgeStorageTryAddTaskStorageComponent && !dimensionBonus.CanReplicateWithDimensionalStorage)
+
+            if (__instance is MechaForgeStorageTryAddTaskStorageComponent && !dimensionBonus.CanReplicateWithDimensionalStorage)
             {
                 return;
             }
-            
+
 
             try
             {
@@ -46,7 +46,9 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
                     __result += storage.GetItemCount(itemId, out int count2);
                     inc += count2;
                 }
-            } catch (Exception ex)
+
+            }
+            catch (Exception ex)
             {
                 Debug.Log("DS - GetItemCountPrefix error: " + ex.ToString());
             }
