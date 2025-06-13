@@ -8,6 +8,9 @@ namespace Com.JiceeDev.DimensionalStorage
 {
     public static class Utils
     {
+        public static bool ShouldIgnoreNextItemCountCall = false;
+        
+        
         private readonly static string CurrentFolderAssemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         private readonly static string AssetsPath = Path.Combine(CurrentFolderAssemblyPath);
 

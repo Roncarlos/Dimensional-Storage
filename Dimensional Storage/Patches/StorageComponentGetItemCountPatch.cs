@@ -38,6 +38,7 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
                 return;
             }
 
+            UIRealtimeTip.Popup($"Running GetItemCountPostfix for {__instance.GetType()} with itemId: {itemId}");
 
             try
             {

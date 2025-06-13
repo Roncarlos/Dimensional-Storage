@@ -72,15 +72,37 @@ namespace Com.JiceeDev.DimensionalStorage
             }
         }
 
-        public void TransferToPlayer(int itemId, int count, int itemInc)
+        /// <summary>
+        /// Transfers items to the player, taking from all available storage containers.
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="count"></param>
+        /// <param name="itemInc"></param>
+        /// <returns>
+        /// The number of items that could not be transferred to the player.
+        /// </returns>
+        public int TransferToPlayer(int itemId, int count, int itemInc)
         {
-            TransferToPlayer(GameMain.data.mainPlayer, itemId, count, itemInc);
+            return TransferToPlayer(GameMain.data.mainPlayer, itemId, count, itemInc);
         }
 
-        public void TransferToPlayer(Player player, int itemId, int count, int itemInc)
+        
+        /// <summary>
+        /// Transfers items to the player, taking from all available storage containers.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="itemId"></param>
+        /// <param name="count"></param>
+        /// <param name="itemInc"></param>
+        /// <returns>
+        /// The number of items that could not be transferred to the player.
+        /// </returns>
+        public int TransferToPlayer(Player player, int itemId, int count, int itemInc)
         {
             int maximumItemsAvailable = StorageContainers.Select(c => c.GetItemCount(itemId)).Sum();
-
+            
+            var missingCount =  maximumItemsAvailable < count ? count - maximumItemsAvailable : 0;
+            
             count = Math.Min(count, maximumItemsAvailable);
             itemInc = Math.Min(itemInc, count);
 
@@ -105,6 +127,8 @@ namespace Com.JiceeDev.DimensionalStorage
                     count -= storageCount;
                 }
             }
+            
+            return missingCount;
         }
 
         public void Export(BinaryWriter writer)

@@ -16,6 +16,11 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
         [HarmonyPostfix]
         public static void GetItemCountPostfix(ref int __result, StorageComponent __instance, int itemId)
         {
+            if (Utils.ShouldIgnoreNextItemCountCall)
+            {
+                Utils.ShouldIgnoreNextItemCountCall = false;
+                return;
+            }
             bool shouldBeHandled = __instance.isPlayerInventory || __instance is MechaForgeStorageTryAddTaskStorageComponent;
 
             if (!shouldBeHandled)
