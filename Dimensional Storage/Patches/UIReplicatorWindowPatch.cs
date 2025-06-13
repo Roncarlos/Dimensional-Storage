@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
@@ -29,8 +30,10 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
             }
             
             var multiplier = GetItemMultiplierForRecipe(__instance, selectedRecipe);
-
-            TakeOutItemsRecursive(selectedRecipe, multiplier);
+            
+            Dictionary<int, int> requiredItems = new Dictionary<int, int>();
+            
+            TakeOutItemsRecursive(selectedRecipe, multiplier, requiredItems);
 
             return true;
         }
@@ -40,12 +43,25 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
             return window.multipliers.TryGetValue(recipe.ID, out var multiplier) ? multiplier : 1;
         }
 
-        static void TakeOutItemsRecursive(RecipeProto recipe, int multiplier)
+        static void TakeOutItemsRecursive(RecipeProto recipe, int multiplier, Dictionary<int, int> requiredItems)
         {
             for (int i = 0; i < recipe.Items.Length; i++)
             {
                 var itemId = recipe.Items[i];
                 var neededItemCount = recipe.ItemCounts[i] * multiplier;
+                
+                if (neededItemCount <= 0) continue;
+                if (requiredItems.TryGetValue(itemId, out var existingCount))
+                {
+                    // If we already have this item in the required items, just add to the count
+                    requiredItems[itemId] = existingCount + neededItemCount;
+                }
+                else
+                {
+                    // Otherwise, add it to the required items
+                    requiredItems[itemId] = neededItemCount;
+                }
+                
                 var playerItemCount = GetItemCountInPlayerInventory(itemId);
                 
                 if (playerItemCount >= neededItemCount)
@@ -54,7 +70,7 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
                     continue;
                 }
                 
-                neededItemCount -= playerItemCount;
+                neededItemCount = requiredItems[itemId] - playerItemCount;
                 
                 // Add what we can from the Dimensional Storage
                 var missingCount = DimensionalStorageMod.DimensionalStorageSystem.TransferToPlayer(itemId, neededItemCount, neededItemCount);
@@ -70,7 +86,7 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
  
                 if (handcraftRecipe != null)
                 {
-                    TakeOutItemsRecursive(handcraftRecipe, Mathf.CeilToInt(missingCount / (float)handcraftCount));
+                    TakeOutItemsRecursive(handcraftRecipe, Mathf.CeilToInt(missingCount / (float)handcraftCount), requiredItems);
                 }
             }
         }
