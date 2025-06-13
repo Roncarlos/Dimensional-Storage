@@ -1,5 +1,7 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using HarmonyLib;
+using UnityEngine;
 
 namespace Com.JiceeDev.DimensionalStorage.Patches
 {
@@ -25,18 +27,64 @@ namespace Com.JiceeDev.DimensionalStorage.Patches
             {
                 return true;
             }
+            
+            var multiplier = GetItemMultiplierForRecipe(__instance, selectedRecipe);
 
-            for (int i = 0; i < selectedRecipe.Items.Length; i++)
-            {
-                int itemId = selectedRecipe.Items[i];
-                int itemCount = selectedRecipe.ItemCounts[i];
-
-                // Add what we can from the Dimensional Storage
-                DimensionalStorageMod.DimensionalStorageSystem.TransferToPlayer(itemId, itemCount, itemCount);
-            }
+            TakeOutItemsRecursive(selectedRecipe, multiplier);
 
             return true;
         }
-        
+
+        static int GetItemMultiplierForRecipe(UIReplicatorWindow window, RecipeProto recipe)
+        {
+            return window.multipliers.TryGetValue(recipe.ID, out var multiplier) ? multiplier : 1;
+        }
+
+        static void TakeOutItemsRecursive(RecipeProto recipe, int multiplier)
+        {
+            for (int i = 0; i < recipe.Items.Length; i++)
+            {
+                var itemId = recipe.Items[i];
+                var neededItemCount = recipe.ItemCounts[i] * multiplier;
+                var playerItemCount = GetItemCountInPlayerInventory(itemId);
+                
+                if (playerItemCount >= neededItemCount)
+                {
+                    // If we have enough items in the player's inventory, we can skip this item
+                    continue;
+                }
+                
+                neededItemCount -= playerItemCount;
+                
+                // Add what we can from the Dimensional Storage
+                var missingCount = DimensionalStorageMod.DimensionalStorageSystem.TransferToPlayer(itemId, neededItemCount, neededItemCount);
+                if (missingCount <= 0) continue;
+                var item = LDB.items.Select(itemId);
+                var handcraftRecipe = item.handcraft;
+                var handcraftCount = item.handcraftProductCount;
+                if (handcraftCount <= 0)
+                {
+                    // If the item is not handcraftable, we can't do anything more
+                    continue;
+                }
+ 
+                if (handcraftRecipe != null)
+                {
+                    TakeOutItemsRecursive(handcraftRecipe, Mathf.CeilToInt(missingCount / (float)handcraftCount));
+                }
+            }
+        }
+
+        static int GetItemCountInPlayerInventory(int itemId)
+        {
+            var player = GameMain.data.mainPlayer;
+            if (player == null) return 0;
+
+            var inventory = player.package;
+            if (inventory == null) return 0;
+            Utils.ShouldIgnoreNextItemCountCall = true;
+            
+            return inventory.GetItemCount(itemId);
+        }
     }
 }
